@@ -1,0 +1,305 @@
+@font-face {
+    font-family: 'PredatorFont';
+    src: url('./predator-font/Predator-nLgM.ttf') format('truetype');
+  }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'PredatorFont', monospace;
+}
+
+body {
+  font-family: 'PredatorFont', 'Courier New', monospace;  
+  background-color: #000;
+  overflow: hidden;
+  color: #ff0000;
+  font-weight: 700;
+}
+
+#container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#video-feed {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(120%) saturate(0.7);
+}
+
+#thermal-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: radial-gradient(circle, rgba(255,0,0,0.2) 0%, rgba(0,255,255,0.2) 100%);
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+#target-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  border: 2px solid #ff0000;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ff0000;
+  animation: pulse 2s infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+#hud {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.corner {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #ff0000;
+}
+
+#top-left {
+  top: 20px;
+  left: 20px;
+  border-right: none;
+  border-bottom: none;
+}
+
+#top-right {
+  top: 20px;
+  right: 20px;
+  border-left: none;
+  border-bottom: none;
+}
+
+#bottom-left {
+  bottom: 20px;
+  left: 20px;
+  border-right: none;
+  border-top: none;
+}
+
+#bottom-right {
+  bottom: 20px;
+  right: 20px;
+  border-left: none;
+  border-top: none;
+}
+
+#text-overlay {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  color: #ff0000;
+  width: 300px;
+}
+
+#text-overlay p {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  text-shadow: 0 0 5px #ff0000;
+}
+
+#controls {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.control-btn {
+  padding: 5px 10px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 5px;
+  background-color: rgba(255, 0, 0, 0.8);
+  color: #000;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.control-btn:hover {
+  background-color: #ff0000;
+}
+
+#scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: rgba(255, 0, 0, 0.5);
+  animation: scan 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scan {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+#grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(255, 0, 0, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.2) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+#target-info {
+  position: absolute;
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
+  color: #ff0000;
+  font-size: 1rem;
+  text-align: right;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+#target-info.active {
+  opacity: 1;
+}
+
+.alien-text {
+  font-family: 'PredatorFont', monospace;
+  font-size: 2rem;
+  letter-spacing: 2px;
+  line-height: 1.5;
+}
+
+#noise-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
+  opacity: 0.05;
+  pointer-events: none;
+}
+/* Código existente de CSS arriba */
+
+/* Responsividad */
+@media (max-width: 1024px) {
+    #text-overlay {
+      bottom: 20px;
+      left: 20px;
+      width: 250px;
+    }
+  
+    #text-overlay p {
+      font-size: 1.2rem;
+    }
+  
+    #target-info {
+      right: 20px;
+      font-size: 0.9rem;
+    }
+  
+    .control-btn {
+      font-size: 1.2rem;
+      padding: 5px;
+    }
+  
+    #target-frame {
+      width: 120px;
+      height: 120px;
+    }
+  
+    .corner {
+      width: 80px;
+      height: 80px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    #text-overlay {
+      width: 200px;
+    }
+  
+    #text-overlay p {
+      font-size: 1rem;
+    }
+  
+    #target-info {
+      font-size: 0.8rem;
+    }
+  
+    .control-btn {
+      font-size: 1rem;
+      padding: 4px;
+    }
+  
+    #target-frame {
+      width: 100px;
+      height: 100px;
+    }
+  
+    .corner {
+      width: 60px;
+      height: 60px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    #text-overlay {
+      bottom: 10px;
+      left: 10px;
+      width: 150px;
+    }
+  
+    #text-overlay p {
+      font-size: 0.8rem;
+    }
+  
+    #target-info {
+      font-size: 0.7rem;
+    }
+  
+    .control-btn {
+      font-size: 0.8rem;
+      padding: 3px;
+    }
+  
+    #target-frame {
+      width: 80px;
+      height: 80px;
+    }
+  
+    .corner {
+      width: 50px;
+      height: 50px;
+    }
+  }

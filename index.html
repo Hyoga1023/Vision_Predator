@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Simulador de Visión Predator</title>
+</head>
+<body>
+  <div id="container">
+    <video id="video-feed" autoplay muted playsinline></video>
+    <div id="thermal-overlay"></div>
+    <div id="grid-overlay"></div>
+    <div id="noise-overlay"></div>
+    <div id="scan-line"></div>
+    
+    <div id="hud">
+      <div class="corner" id="top-left"></div>
+      <div class="corner" id="top-right"></div>
+      <div class="corner" id="bottom-left"></div>
+      <div class="corner" id="bottom-right"></div>
+      <div id="target-frame"></div>
+    </div>
+    
+    <div id="text-overlay">
+      <p class="alien-text" id="main-text">SISTEMA DE VISION PREDATOR ACTIVADO</p>
+      <p class="alien-text" id="secondary-text">ESCANEANDO OBJETIVOS...</p>
+      <p class="alien-text" id="coordinates">LAT: 34.2°N  LON: 118.4°W</p>
+    </div>
+    
+    <div id="target-info" class="alien-text">
+      <p>OBJETIVO ANALIZADO</p>
+      <p>TIPO: HUMANOIDE</p>
+      <p>AMENAZA: MINIMA</p>
+      <p>TEMPERATURA: 37.2°C</p>
+      <p>ESTADO: VIVO</p>
+    </div>
+    
+    <div id="controls">
+      <button class="control-btn" id="thermal-btn">VISION TERMICA</button>
+      <button class="control-btn" id="night-btn">VISION NOCTURNA</button>
+      <button class="control-btn" id="bio-btn">ANALISIS BIOLOGICO</button>
+      <button class="control-btn" id="target-btn">ESCANEAR OBJETIVO</button>
+    </div>
+  </div>
+  <script src="predator.js"></script>
+</body>
+</html>
