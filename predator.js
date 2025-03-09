@@ -8,6 +8,25 @@ document.addEventListener('DOMContentLoaded', function () {
     const buttons = document.querySelectorAll('.control-btn');
     const targetFrame = document.getElementById('target-frame');
 
+    // Configuración inicial del zoom
+    let zoomLevel = 1; // Nivel inicial de zoom
+    const zoomStep = 0.2; // Incremento o decremento por paso
+
+    // Control de Zoom: Usar rueda del mouse
+    videoElement.addEventListener('wheel', (event) => {
+        event.preventDefault(); // Prevenir el scroll de la página
+
+        if (event.deltaY < 0) {
+            zoomLevel = Math.min(zoomLevel + zoomStep, 3); // Limitar el zoom máximo a 3x
+        } else {
+            zoomLevel = Math.max(zoomLevel - zoomStep, 1); // Limitar el zoom mínimo a 1x
+        }
+
+        // Aplicar el zoom al elemento del video
+        videoElement.style.transform = `scale(${zoomLevel})`;
+        videoElement.style.transformOrigin = 'center center'; // Ajustar el punto de zoom
+    });
+
     // Configuración del sonido
     const sound = new Audio('./Sonidos/778138__newlocknew__dsgnmisc_predators-vision-pov-1-1_em.mp3');
     sound.volume = 0.5; // Volumen inicial
@@ -117,38 +136,5 @@ document.addEventListener('DOMContentLoaded', function () {
         // Ajustar la posición del cuadro objetivo
         targetFrame.style.left = `${mouseX - targetFrame.offsetWidth / 2}px`;
         targetFrame.style.top = `${mouseY - targetFrame.offsetHeight / 2}px`;
-    });
-
-    // Zoom al hacer clic
-    document.addEventListener('click', (event) => {
-        const zoomLevel = 2;
-        const zoomAreaSize = 200;
-
-        // Crear una capa para mostrar el zoom
-        const zoomOverlay = document.createElement('div');
-        zoomOverlay.style.position = 'absolute';
-        zoomOverlay.style.border = '2px solid white';
-        zoomOverlay.style.width = `${zoomAreaSize}px`;
-        zoomOverlay.style.height = `${zoomAreaSize}px`;
-        zoomOverlay.style.overflow = 'hidden';
-        zoomOverlay.style.zIndex = '9999';
-        zoomOverlay.style.borderRadius = '50%';
-
-        // Posicionar el zoom
-        const mouseX = event.clientX;
-        const mouseY = event.clientY;
-        zoomOverlay.style.left = `${mouseX - zoomAreaSize / 2}px`;
-        zoomOverlay.style.top = `${mouseY - zoomAreaSize / 2}px`;
-
-        const zoomedContent = videoElement.cloneNode(true);
-        zoomedContent.style.transform = `scale(${zoomLevel})`;
-        zoomedContent.style.transformOrigin = `${mouseX}px ${mouseY}px`;
-        zoomOverlay.appendChild(zoomedContent);
-
-        document.body.appendChild(zoomOverlay);
-
-        setTimeout(() => {
-            document.body.removeChild(zoomOverlay);
-        }, 2000);
     });
 });
